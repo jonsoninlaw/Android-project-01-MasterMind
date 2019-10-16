@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         final Button button4 = findViewById(R.id.button4);
         final Button button5 = findViewById(R.id.button5);
         final TextView answerText = findViewById(R.id.answerText);
+        final TextView previousTries = findViewById(R.id.previousTries);
 
         final Master master = new Master();
 
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
                         answer[i] = Character.getNumericValue(numbersShow.getText().toString().charAt(i));
                     }
                     answerText.setText(master.compareMind(answer));
+                    previousTries.setText(numbersShow.getText().toString() + "\n" + previousTries.getText());
                 }
 
             }
