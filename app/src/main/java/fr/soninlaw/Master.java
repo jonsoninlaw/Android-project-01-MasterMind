@@ -13,14 +13,15 @@ public class Master {
 
 
     public Master() {
-        this.mastermind = new int[] {random.nextInt(5), random.nextInt(5),
-                random.nextInt(5), random.nextInt(5), random.nextInt(5)};
+        this.mastermind = new int[] {random.nextInt(6), random.nextInt(6),
+                random.nextInt(6), random.nextInt(6), random.nextInt(6)};
         this.tries = 0;
     }
 
     public String compareMind(int[] answer) {
         int goodNumbers = 0;
         int placedNumbers = 0;
+        this.tries ++;
 
         for (int i = 0; i < mastermind.length; i++) {
             for (int j = 0; j < answer.length; j++) {
@@ -59,7 +60,7 @@ public class Master {
             case 4:
                 return String.format("%s chiffre(s) présent(s) dans la combinaison et\n %s chiffres bien placés !!! OMG, presque !!", goodNumbers, placedNumbers);
             default:
-                return String.format("Wouhou, c'est gagné !! Bravo !!\n Vous avez trouvé la combinaison en %s tentatives.", tries);
+                return String.format("Wouhou, c'est gagné !! Bravo !!\n Vous avez trouvé la combinaison en %s tentatives.", this.tries);
         }
     }
 /*
