@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">MasterMind</string>
-    <string name="welcome_text">Welcome Master !</string>
+    <string name="welcome_text">Hello wilder !</string>
     <string name="start_text">Can you guess the 5 numbers sequence ?</string>
     <string name="numbers_view"></string>
     <string name="answer_text">Give it a try !</string>
     <string name="previous_numbers"></string>
     <string name="previous_text">Dernières tentatives :</string>
+    <string name="restart_button">New game</string>
 </resources>
