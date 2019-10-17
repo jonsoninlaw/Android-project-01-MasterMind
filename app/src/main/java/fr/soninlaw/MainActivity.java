@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    static Master master = new Master();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +28,7 @@ public class MainActivity extends AppCompatActivity {
         final Button button5 = findViewById(R.id.button5);
         final TextView answerText = findViewById(R.id.answerText);
         final TextView previousTries = findViewById(R.id.previousTries);
-
-        final Master master = new Master();
+        final Button restartButton = findViewById(R.id.restart_button);
 
         numbersShow.addTextChangedListener(new TextWatcher() {
             @Override
@@ -43,7 +44,11 @@ public class MainActivity extends AppCompatActivity {
                         answer[i] = Character.getNumericValue(numbersShow.getText().toString().charAt(i));
                     }
                     answerText.setText(master.compareMind(answer));
-                    previousTries.setText(numbersShow.getText().toString() + "\n" + previousTries.getText());
+                    previousTries.setText(numbersShow.getText().toString() + "   -->  bon(s) : " + master.getGoodNumbers() + "  placé(s) : " + master.getPlacedNumbers() + "\n" + previousTries.getText());
+
+                    if (master.isWin()) {
+                        restartButton.setVisibility(View.VISIBLE);
+                    }
                 }
 
             }
@@ -123,6 +128,17 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     numbersShow.setText(numbersShow.getText().toString() + 5);
                 }
+            }
+        });
+
+        restartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                restartButton.setVisibility(View.GONE);
+                master = new Master();
+                numbersShow.setText("");
+                answerText.setText("Try to do better !");
+                previousTries.setText("");
             }
         });
 
