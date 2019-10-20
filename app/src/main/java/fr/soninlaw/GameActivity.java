@@ -14,6 +14,33 @@ public class GameActivity extends AppCompatActivity {
 
     static Master master = new Master();
 
+
+
+    private void destination(TextView[] playerGuess, String number) {
+        if (playerGuess[4].getText().toString().length() != 0) {
+            playerGuess[0].setText("");
+            playerGuess[1].setText("");
+            playerGuess[2].setText("");
+            playerGuess[3].setText("");
+            playerGuess[4].setText("");
+        }
+        if (playerGuess[0].getText().toString().length() == 0) {
+            playerGuess[0].setText(number);
+        }
+        else if (playerGuess[1].getText().toString().length() == 0) {
+            playerGuess[1].setText(number);
+        }
+        else if (playerGuess[2].getText().toString().length() == 0) {
+            playerGuess[2].setText(number);
+        }
+        else if (playerGuess[3].getText().toString().length() == 0) {
+            playerGuess[3].setText(number);
+        }
+        else {
+            playerGuess[4].setText(number);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,10 +49,16 @@ public class GameActivity extends AppCompatActivity {
         Intent main = getIntent();
         String name = main.getStringExtra("name");
 
+        final TextView firstNumber = findViewById(R.id.firstNumber);
+        final TextView secondNumber = findViewById(R.id.secondNumber);
+        final TextView thirdNumber = findViewById(R.id.thirdNumber);
+        final TextView fourthNumber = findViewById(R.id.fourthNumber);
+        final TextView fifthNumber = findViewById(R.id.fifthNumber);
+        final TextView[] playerGuess = {firstNumber, secondNumber, thirdNumber, fourthNumber, fifthNumber};
+
         final TextView goodLuck = findViewById(R.id.goodLuckText);
         goodLuck.setText("Good luck " + name + " !");
 
-        final TextView numbersShow = findViewById(R.id.playerGuess);
         final Button button0 = findViewById(R.id.button0);
         final Button button1 = findViewById(R.id.button1);
         final Button button2 = findViewById(R.id.button2);
@@ -36,7 +69,7 @@ public class GameActivity extends AppCompatActivity {
         final TextView previousTries = findViewById(R.id.previousTries);
         final Button restartButton = findViewById(R.id.restart_button);
 
-        numbersShow.addTextChangedListener(new TextWatcher() {
+        fifthNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -44,13 +77,21 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (numbersShow.getText().toString().length() == 5) {
+                if (fifthNumber.getText().toString().length() != 0) {
                     int[] answer = new int[5];
-                    for (int i = 0; i < 5; i++) {
-                        answer[i] = Character.getNumericValue(numbersShow.getText().toString().charAt(i));
+                    answer[0] = Integer.parseInt(firstNumber.getText().toString());
+                    answer[1] = Integer.parseInt(secondNumber.getText().toString());
+                    answer[2] = Integer.parseInt(thirdNumber.getText().toString());
+                    answer[3] = Integer.parseInt(fourthNumber.getText().toString());
+                    answer[4] = Integer.parseInt(fifthNumber.getText().toString());
+
+                    String answerPrint = "";
+                    for (int elt : answer) {
+                        answerPrint += Integer.toString(elt);
                     }
+
                     answerText.setText(master.compareMind(answer));
-                    previousTries.setText(numbersShow.getText().toString() + "   -->  bon(s) : " + master.getGoodNumbers() + "  placé(s) : " + master.getPlacedNumbers() + "\n" + previousTries.getText());
+                    previousTries.setText(answerPrint + "   -->  bon(s) : " + master.getGoodNumbers() + "  placé(s) : " + master.getPlacedNumbers() + "\n" + previousTries.getText());
 
                     if (master.isWin()) {
                         restartButton.setVisibility(View.VISIBLE);
@@ -68,72 +109,42 @@ public class GameActivity extends AppCompatActivity {
         button0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (numbersShow.getText().toString().length() >= 5) {
-                    numbersShow.setText("0");
-                }
-                else {
-                    numbersShow.setText(numbersShow.getText().toString() + 0);
-                }
+                destination(playerGuess,"0");
             }
         });
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (numbersShow.getText().toString().length() >= 5) {
-                    numbersShow.setText("1");
-                }
-                else {
-                    numbersShow.setText(numbersShow.getText().toString() + 1);
-                }
+                destination(playerGuess,"1");
             }
         });
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (numbersShow.getText().toString().length() >= 5) {
-                    numbersShow.setText("2");
-                }
-                else {
-                    numbersShow.setText(numbersShow.getText().toString() + 2);
-                }
+                destination(playerGuess,"2");
             }
         });
 
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (numbersShow.getText().toString().length() >= 5) {
-                    numbersShow.setText("3");
-                }
-                else {
-                    numbersShow.setText(numbersShow.getText().toString() + 3);
-                }
+                destination(playerGuess,"3");
             }
         });
 
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (numbersShow.getText().toString().length() >= 5) {
-                    numbersShow.setText("4");
-                }
-                else {
-                    numbersShow.setText(numbersShow.getText().toString() + 4);
-                }
+                destination(playerGuess,"4");
             }
         });
 
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (numbersShow.getText().toString().length() >= 5) {
-                    numbersShow.setText("5");
-                }
-                else {
-                    numbersShow.setText(numbersShow.getText().toString() + 5);
-                }
+                destination(playerGuess,"5");
             }
         });
 
@@ -142,12 +153,14 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 restartButton.setVisibility(View.GONE);
                 master = new Master();
-                numbersShow.setText("");
+                firstNumber.setText("");
+                secondNumber.setText("");
+                thirdNumber.setText("");
+                fourthNumber.setText("");
+                fifthNumber.setText("");
                 answerText.setText("Try to do better !");
                 previousTries.setText("");
             }
         });
-
-
     }
 }
