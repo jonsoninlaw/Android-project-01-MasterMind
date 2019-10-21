@@ -20,6 +20,10 @@ public class Master {
         this.win = false;
     }
 
+    public int[] getMastermind() {
+        return mastermind;
+    }
+
     public int getGoodNumbers() {
         return this.goodNumbers;
     }

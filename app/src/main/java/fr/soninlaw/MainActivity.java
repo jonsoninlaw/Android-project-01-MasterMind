@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final Button startButton = findViewById(R.id.startButton);
+        final Button easyModeButton = findViewById(R.id.easyModeButton);
         final EditText nameField = findViewById(R.id.nameField);
 
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -35,6 +36,22 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                     Intent game = new Intent(MainActivity.this, GameActivity.class);
+                    game.putExtra("name", nameField.getText().toString());
+                    startActivity(game);
+                }
+            }
+        });
+
+        easyModeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (nameField.getText().length() == 0) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Merci d'entrer au moins un caractère !", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.TOP| Gravity.CENTER, 0, 500);
+                    toast.show();
+                }
+                else {
+                    Intent game = new Intent(MainActivity.this, EasyGameActivity.class);
                     game.putExtra("name", nameField.getText().toString());
                     startActivity(game);
                 }
